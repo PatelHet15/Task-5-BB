@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1, h2 {
+            color: #007bff;
+            text-align: center;
+        }
+        .results {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        span {
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <h2>Your score: {{ score }} out of {{ total_questions }}</h2>
+
+    <div class="results">
+        <h3>Your Answers:</h3>
+        <ul>
+            {% for question in questions %}
+                <li>
+                    <strong>{{ question.text }}</strong><br>
+                    Your Answer: 
+                    <span class="{% if question.user_answer == question.right_answer %}correct{% else %}incorrect{% endif %}">
+                        {{ question.user_answer }}
+                    </span><br>
+                    Correct Answer: {{ question.right_answer }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <a href="{% url 'quiz_view' %}">Give the quiz again</a>
+</body>
+</html>
